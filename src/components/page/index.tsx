@@ -20,7 +20,7 @@ const Page: React.FC<PageProps> = ({
       <div className={twMerge(`flex-1`, fixedFooter ? "overflow-scroll" : "")}>
         {children}
       </div>
-      <Footer fixed={fixedFooter} />
+      <Footer />
     </div>
   );
 };
