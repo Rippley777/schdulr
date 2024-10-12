@@ -19,19 +19,19 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #58ed33;
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: #2ec344;
 }
 
 body {
   margin: 0;
-  display: flex;
+  /* display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100vh; */
 }
 
 h1 {
