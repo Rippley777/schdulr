@@ -1,0 +1,19 @@
+{
+  "pages": [
+    {
+      "title": "Home",
+      "path": "/",
+      "component": "src/pages/Home"
+    },
+    {
+      "title": "About",
+      "path": "/about",
+      "component": "src/pages/About"
+    },
+    {
+      "title": "Calendar",
+      "path": "/calendar",
+      "component": "src/pages/Calendar"
+    }
+  ]
+}
