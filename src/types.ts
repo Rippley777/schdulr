@@ -1,3 +1,5 @@
+/* Configuration types */
+
 export type SiteConfig = {
   pages: PageConfig[];
 };
