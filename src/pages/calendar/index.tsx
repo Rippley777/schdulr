@@ -1,29 +1,20 @@
 import { useState } from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import Page from "../../components/page";
-import "./calendar.css";
-import { filterDays, filterTimes } from "./utils";
+import MonthTime from "./monthTime";
 
 const CalendarPage: React.FC = () => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [apptDate, setApptDate] = useState<Date | null>(new Date());
+  // const;
 
   return (
     <Page bodyStyles="flex flex-col items-center">
-      <div className="w-[80vh]">
-        <DatePicker
-          selected={startDate}
-          onChange={(date) => setStartDate(date)}
-          monthsShown={1}
-          filterTime={filterTimes}
-          filterDate={filterDays}
-          showTimeSelect
-          inline
-        />
+      <div className="w-full">
+        <MonthTime onHandleUpdate={setApptDate} />
       </div>
-      {startDate && <div>{startDate.toLocaleDateString()}</div>}
-      {startDate && <div>{startDate.toLocaleTimeString()}</div>}
+      {apptDate && <div>{apptDate.toLocaleDateString()}</div>}
+      {apptDate && <div>{apptDate.toLocaleTimeString()}</div>}
     </Page>
   );
 };
