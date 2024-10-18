@@ -1,4 +1,4 @@
-import { sub } from "date-fns";
+import { add, differenceInHours, getDate, max, sub } from "date-fns";
 import scheduleData from "./schedule.config.json";
 
 const filterPassedDate = (time: Date) => {
@@ -36,10 +36,33 @@ const filterSchedule = (time: Date) => {
   return false;
 };
 
-export const filterTimes = (time: Date) => {
+const hasAdjacentAppointments = (time: Date, appointments: any) => {
+  const nearbyAppointments = appointments.filter((appt: any) => {
+    console.log("time", Math.abs(differenceInHours(new Date(appt.date), time)));
+
+    return Math.abs(differenceInHours(new Date(appt.date), time)) < 1;
+  });
+  return nearbyAppointments.length > 0;
+};
+
+export const filterTimes = (time: Date, appointments: any) => {
+  const day = getDate(time);
+
+  const dayAppointments = appointments.filter(
+    (appt: any) => new Date(appt.date).getDate() === day
+  );
+
   if (filterPassedTime(time)) {
-    return filterSchedule(time);
-  } else {
+    if (filterSchedule(time)) {
+      if (dayAppointments.length > 0) {
+        if (!hasAdjacentAppointments(time, dayAppointments)) {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    }
+
     return false;
   }
 };
@@ -50,9 +73,21 @@ const filterScheduleDays = (time: Date) => {
   return Boolean(scheduleDay) || false;
 };
 
-export const filterDays = (time: Date) => {
+export const filterDays = (time: Date, appointments: any) => {
   if (filterPassedDate(time)) {
-    return filterScheduleDays(time);
+    if (filterScheduleDays(time)) {
+      if (scheduleData.maxAppointmentsPerDay) {
+        const day = getDate(time);
+        const dayAppointments = appointments.filter(
+          (appt: any) => new Date(appt.date).getDate() === day
+        );
+        if (dayAppointments.length < scheduleData.maxAppointmentsPerDay) {
+          return true;
+        }
+      } else {
+        return true;
+      }
+    }
+    return false;
   }
-  return false;
 };

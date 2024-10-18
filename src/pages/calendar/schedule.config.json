@@ -1,4 +1,5 @@
 {
+  "maxAppointmentsPerDay": 3,
   "days": [
     false,
     {
