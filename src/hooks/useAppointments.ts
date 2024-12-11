@@ -4,8 +4,8 @@ import {
   createAppointment,
   updateAppointment,
   deleteAppointment,
-  Appointment,
 } from "../services/appointmentService";
+import { Appointment } from "../types";
 
 // Hook to get all appointments
 export const useAppointments = () => {

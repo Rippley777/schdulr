@@ -1,16 +1,8 @@
 import axios from "axios";
 import { API_URL } from "./api";
+import { Appointment } from "../types";
 
 const APPOINTMENTS_API_URL = `${API_URL}/api/appointments`;
-
-// Appointment type
-export interface Appointment {
-  _id: string;
-  title: string;
-  description?: string;
-  date: string;
-  isConfirmed: boolean;
-}
 
 // Fetch all appointments
 export const fetchAppointments = async (): Promise<Appointment[]> => {

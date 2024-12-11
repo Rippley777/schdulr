@@ -8,9 +8,10 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = () => {
   return (
-    <div className="w-full min-h-20 bg-gray-700 flex justify-between items-center px-5">
-      <div>
-        <img src={reactLogo} className="logo react" alt="React logo" />
+    <div className="w-full min-h-20 dark:bg-black flex justify-between items-center px-5">
+      <div className="text-3xl font-bold">
+        {/* <img src={reactLogo} className="logo react" alt="React logo" /> */}
+        RIP Repair
       </div>
       <div className="flex">
         {siteConfigJson.pages.map((page: PageConfig) => (
@@ -27,8 +28,10 @@ type HeaderLinkProps = { href: string; children: React.ReactNode };
 
 const HeaderLink: React.FC<HeaderLinkProps> = ({ href, children }) => {
   return (
-    <div className="mx-5">
-      <a href={href}>{children}</a>
+    <div className="header-nav mx-5">
+      <a className="font-700 text-white" href={href}>
+        {children}
+      </a>
     </div>
   );
 };

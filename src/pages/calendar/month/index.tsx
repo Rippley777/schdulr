@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import "./calendar.css";
-import { filterDaysWithTime, filterTimes } from "../utils";
+import { filterDaysWithAppointments } from "../utils";
 import { Appointment } from "../../../types";
 
 type MonthTimeCalendarProps = {
@@ -28,11 +28,7 @@ const MonthTimeCalendar: React.FC<MonthTimeCalendarProps> = ({
       selected={startDate}
       onChange={(date) => setStartDate(date)}
       monthsShown={1}
-      filterTime={(time) => filterTimes(time, appointments)}
-      filterDate={(time) => filterDaysWithTime(time, appointments)}
-      timeIntervals={15}
-      setDefaultTime={18}
-      showTimeSelect
+      filterDate={(time) => filterDaysWithAppointments(time, appointments)}
       inline
     />
   );

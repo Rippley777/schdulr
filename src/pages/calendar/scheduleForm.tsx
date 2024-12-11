@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { useCreateAppointment } from "../../hooks/useAppointments";
+import FormInput, { Input } from "../../components/form/input";
 
 type IFormInputs = {
   date: Date;
@@ -57,20 +58,22 @@ const ScheduleForm: React.FC<ScheduleForm> = ({ date }) => {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
       {date ? (
         <>
-          Date:
-          <Controller
-            name="localDate"
-            control={control}
-            disabled={true}
-            render={({ field }) => <input {...field} />}
-          />
-          Time:
-          <Controller
-            name="localTime"
-            control={control}
-            disabled={true}
-            render={({ field }) => <input {...field} />}
-          />
+          <FormInput label="Date">
+            <Controller
+              name="localDate"
+              control={control}
+              disabled={true}
+              render={({ field }) => <Input {...field} />}
+            />
+          </FormInput>
+          <FormInput label="Time">
+            <Controller
+              name="localTime"
+              control={control}
+              disabled={true}
+              render={({ field }) => <Input {...field} />}
+            />
+          </FormInput>
         </>
       ) : null}
       <div>
@@ -88,13 +91,14 @@ const ScheduleForm: React.FC<ScheduleForm> = ({ date }) => {
             />
           )}
         /> */}
-        Email:
-        <Controller
-          name="email"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => <input {...field} />}
-        />
+        <FormInput label="Email">
+          <Controller
+            name="email"
+            control={control}
+            rules={{ required: true }}
+            render={({ field }) => <Input {...field} />}
+          />
+        </FormInput>
       </div>
       <input type="submit" />
     </form>

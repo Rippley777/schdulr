@@ -1,5 +1,6 @@
-import { add, differenceInHours, getDate, max, sub } from "date-fns";
+import { differenceInHours, getDate, sub } from "date-fns";
 import scheduleData from "./schedule.config.json";
+import { Appointment } from "../../types";
 
 const filterPassedDate = (time: Date) => {
   const currentDate = new Date();
@@ -36,8 +37,8 @@ const filterSchedule = (time: Date) => {
   return false;
 };
 
-const hasAdjacentAppointments = (time: Date, appointments: any) => {
-  const nearbyAppointments = appointments.filter((appt: any) => {
+const hasAdjacentAppointments = (time: Date, appointments: Appointment[]) => {
+  const nearbyAppointments = appointments.filter((appt) => {
     console.log("time", Math.abs(differenceInHours(new Date(appt.date), time)));
 
     return Math.abs(differenceInHours(new Date(appt.date), time)) < 1;
@@ -45,26 +46,29 @@ const hasAdjacentAppointments = (time: Date, appointments: any) => {
   return nearbyAppointments.length > 0;
 };
 
-export const filterTimes = (time: Date, appointments: any) => {
+export const filterTimes = (time?: Date, appointments?: Appointment[]) => {
+  if (!time) {
+    return false;
+  }
   const day = getDate(time);
 
-  const dayAppointments = appointments.filter(
-    (appt: any) => new Date(appt.date).getDate() === day
-  );
+  const dayAppointments =
+    appointments?.filter((appt) => new Date(appt.date).getDate() === day) || [];
 
   if (filterPassedTime(time)) {
     if (filterSchedule(time)) {
       if (dayAppointments.length > 0) {
         if (!hasAdjacentAppointments(time, dayAppointments)) {
           return true;
+        } else {
+          return false;
         }
       } else {
         return true;
       }
     }
-
-    return false;
   }
+  return false;
 };
 
 const filterScheduleDays = (time: Date) => {
@@ -73,14 +77,21 @@ const filterScheduleDays = (time: Date) => {
   return Boolean(scheduleDay) || false;
 };
 
-export const filterDays = (time: Date, appointments: any) => {
+export const filterDaysWithTime = (
+  time?: Date,
+  appointments?: Appointment[]
+) => {
+  if (!time) {
+    return false;
+  }
   if (filterPassedDate(time)) {
     if (filterScheduleDays(time)) {
       if (scheduleData.maxAppointmentsPerDay) {
         const day = getDate(time);
-        const dayAppointments = appointments.filter(
-          (appt: any) => new Date(appt.date).getDate() === day
-        );
+        const dayAppointments =
+          appointments?.filter(
+            (appt) => new Date(appt.date).getDate() === day
+          ) || [];
         if (dayAppointments.length < scheduleData.maxAppointmentsPerDay) {
           return true;
         }
@@ -88,6 +99,40 @@ export const filterDays = (time: Date, appointments: any) => {
         return true;
       }
     }
+  }
+  return false;
+};
+
+export const filterDays = (time?: Date) => {
+  if (!time) {
     return false;
   }
+  if (filterPassedDate(time)) {
+    if (filterScheduleDays(time)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+export const filterDaysWithAppointments = (
+  time?: Date,
+  appointments?: Appointment[]
+) => {
+  if (!time) {
+    return false;
+  }
+  console.log("time", time);
+  if (filterDays(time)) {
+    const day = getDate(time);
+    console.log("appointments", appointments);
+    const dayAppointments =
+      appointments?.filter((appt) => new Date(appt.date).getDate() === day) ||
+      [];
+    console.log("dayAppointments", dayAppointments);
+    if (dayAppointments.length > 0) {
+      return true;
+    }
+  }
+  return false;
 };

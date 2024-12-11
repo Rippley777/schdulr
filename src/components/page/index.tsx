@@ -17,7 +17,7 @@ const Page: React.FC<PageProps> = ({
   fixedHeader = true,
 }) => {
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full dark:bg-black">
       <Header fixed={fixedHeader} />
       <div
         className={twMerge(
