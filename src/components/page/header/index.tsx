@@ -1,4 +1,4 @@
-import reactLogo from "../../../assets/react.svg";
+// import reactLogo from "../../../assets/react.svg";
 import { PageConfig } from "../../../types";
 import siteConfigJson from "../../../site.config.json";
 

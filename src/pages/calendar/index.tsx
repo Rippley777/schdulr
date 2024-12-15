@@ -2,7 +2,7 @@ import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
 import Page from "../../components/page";
-import Month from "./month";
+import MonthTime from "./monthTime";
 import ScheduleForm from "./scheduleForm";
 import { useAppointments } from "../../hooks/useAppointments";
 
@@ -13,20 +13,22 @@ const CalendarPage: React.FC = () => {
   const [apptDate, setApptDate] = useState<Date | null>(new Date());
 
   return (
-    <Page bodyStyles="flex flex-col items-center">
-      {!isLoading && !error && (
-        <div className="w-full h-3/4 flex flex-col md:flex-row">
-          <div className="w-2/3">
-            <Month onHandleUpdate={setApptDate} appointments={appointments} />
+    <Page>
+      {!isLoading && !error ? (
+        <div className="w-full h-3/4 flex flex-col lg:flex-row justify-around">
+          <div className="lg:basis-2/3">
+            <MonthTime
+              onHandleUpdate={setApptDate}
+              appointments={appointments}
+            />
           </div>
-          <div className="m-10">
+          <div className="flex justify-center lg:basis-1/3">
             <ScheduleForm date={apptDate} />
           </div>
         </div>
+      ) : (
+        <div>Error</div>
       )}
-
-      {/* {apptDate && <div>{apptDate.toLocaleDateString()}</div>} */}
-      {apptDate && <div>{apptDate.toLocaleTimeString()}</div>}
     </Page>
   );
 };

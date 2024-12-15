@@ -1,4 +1,4 @@
-import { differenceInHours, getDate, sub } from "date-fns";
+import { differenceInHours, getDate, isSameDay, sub } from "date-fns";
 import scheduleData from "./schedule.config.json";
 import { Appointment } from "../../types";
 
@@ -124,13 +124,12 @@ export const filterDaysWithAppointments = (
   }
   console.log("time", time);
   if (filterDays(time)) {
-    const day = getDate(time);
+    const day = new Date(time);
     console.log("appointments", appointments);
     const dayAppointments =
-      appointments?.filter((appt) => new Date(appt.date).getDate() === day) ||
-      [];
+      appointments?.filter((appt) => isSameDay(new Date(appt.date), day)) || [];
     console.log("dayAppointments", dayAppointments);
-    if (dayAppointments.length > 0) {
+    if (dayAppointments.length === 0) {
       return true;
     }
   }
